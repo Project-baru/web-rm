@@ -7,11 +7,6 @@
 
     <title>Order</title>
     <style>
-        p {
-            margin: 30px;
-            padding: 0;
-        }
-
         h2 {
             padding-top: 20px;
         }
@@ -36,6 +31,8 @@
 
     <h2 class="text-center">Order</h2>
     <p class="row justify-content-center align-items-center">Jangan lupa order minumannya juga ya!</p>
+
+    <!--Bagian Makanan-->
     <div class="row justify-content-center align-items-center">
         <select class="custom-selct custom-select-lg m-3 p-2" style="width: 50%;" id="makanan">
             <option selected>Order makanan disini...</option>
@@ -49,7 +46,10 @@
     <div class="row justify-content-center align-items-center">
         <input type="number" id="jumlahMakan" class="form-control m-3" placeholder="Banyaknya makanan..." style="width: 50%;">
     </div>
+
     <br><br>
+
+    <!--Bagian Minuman-->
     <div class="row justify-content-center align-items-center">
         <select class="custom-selct custom-select-lg m-3 p-2" style="width: 50%;" id="minuman">
             <option selected>Order minuman disini...</option>
@@ -63,18 +63,41 @@
         <input type="number" id="jumlahMinum" class="form-control m-3" placeholder="Banyaknya minuman..." style="width: 50%;">
     </div>
     <br>
+
+    <!--Jumlah Harga-->
     <div class="row justify-content-center align-items-center">
-        <p>Jumlah Harga:</p>
+        <p class="m-3">Jumlah Harga:</p>
         <div class="input-group-prepend">
             <span class="input-group-text">Rp</span>
         </div>
         <input class="form-control" id="total-harga" value="0" type="text" style="width: 30%;" readonly>
     </div>
+
+    <!--Button-->
     <div class="row justify-content-center align-items-center">
-        <button type="button" class="btn btn-warning" onclick="totalHarga()">Bayar</button>
+        <button type="button" class="btn btn-warning mx-3" onclick="totalHarga()">Total Harga</button>
+        <button type="button" class="btn btn-primary mx-3" onclick="bayarButton()">Bayar</button>
     </div>
 
-    <footer class="fixed-bottom page-footer font-small">
+
+    <!--Bayar/donasi dengan ovo-->
+    <div class="row justify-content-center align-items-center text-center">
+        <div id="confirmBayar" style="display: none;">
+            <p>Terima kasih! Pesanan anda akan dikonfirmasi setelah pembayaran melalui OVO dibawah.</p>
+            <img src="./assets/ovo.jpg" alt="OVO" class="rounded mx-auto d-block" width="300px">
+        </div>
+    </div>
+
+    <!--Klik bayar tapi belum ada harga-->
+    <div id="belumBayar" style="display: none;">
+        <p class="text-center">Maaf, anda belum memesan.</p>
+    </div>
+
+    <br><br><br>
+
+
+    <!--Footer-->
+    <footer class="fixed-bottom page-footer font-small bg-light">
         <div class="footer-copyright text-center py-3" style="background-color: rgba(0, 0, 0, 0.05)";>© 2021 Copyright: University of Trunojoyo Madura</div>
     </footer>
 
@@ -105,9 +128,21 @@
             var reverse = total.toString().split('').reverse().join(''),
             ribuan = reverse.match(/\d{1,3}/g);
             ribuan = ribuan.join('.').split('').reverse().join('');
+            window.ribuan = ribuan
 
             //menampilkan hasil harga akhir
             document.getElementById('total-harga').value = ribuan;
+        }
+
+        function bayarButton() {
+            if (document.getElementById('total-harga').value > 0) {
+                document.getElementById("confirmBayar").style.display = 'block';
+                document.getElementById("belumBayar").style.display = 'none';
+            }
+            else {
+                document.getElementById("belumBayar").style.display = 'block';
+                document.getElementById("confirmBayar").style.display = 'none';
+            }
         }
     </script>
 </body>
